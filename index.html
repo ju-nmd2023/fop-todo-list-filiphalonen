@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>To-Do List</h1>
-    <form name="todo-form" onsubmit="addTask()">
+    <form name="todo-form" onsubmit="event.preventDefault(); submitTask()">
       <input name="task-name" type="text" />
       <input name="task-add" type="submit" value="Add" />
     </form>
