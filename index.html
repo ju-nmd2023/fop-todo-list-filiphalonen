@@ -6,6 +6,13 @@
     <title>To Do</title>
     <link rel="stylesheet" href="todo.css" />
   </head>
-  <body></body>
+  <body>
+    <h1>To-Do List</h1>
+    <form name="todo-form" onsubmit="addTask()">
+      <input name="task-name" type="text" />
+      <input name="task-add" type="submit" value="Add" />
+    </form>
+    <div id="task-list"></div>
+  </body>
   <script src="todo.js"></script>
 </html>
