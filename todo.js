@@ -1,15 +1,19 @@
 function submitTask() {
   //   const form = document.querySelector("form[name='todo-form']");
   const taskName = document.querySelector("input[name='task-name']").value;
-  addToLocalStorage(taskName);
+  const taskObject = {
+    name: taskName,
+    status: "notDone",
+  };
+  addToLocalStorage(taskObject);
 }
 
-function addToLocalStorage(taskName) {
+function addToLocalStorage(taskObject) {
   if (localStorage.getItem("taskList") == undefined) {
-    localStorage.setItem("taskList", JSON.stringify([taskName]));
+    localStorage.setItem("taskList", JSON.stringify([taskObject]));
   } else {
     let list = JSON.parse(localStorage.getItem("taskList"));
-    list.push(taskName);
+    list.push(taskObject);
     localStorage.setItem("taskList", JSON.stringify(list));
   }
 }
@@ -24,8 +28,16 @@ function getFromLocalStorage() {
 getFromLocalStorage();
 
 function displayTask(element) {
+  console.log(element.name);
   let taskCard = document.createElement("div");
-  let taskTitle = document.createTextNode(element);
-  taskCard.appendChild(taskTitle);
+  let taskTitleContainer = document.createElement("div");
+  let taskStatusContainer = document.createElement("div");
+  taskCard.classList.add("taskCard");
+  let taskTitle = document.createTextNode(element.name);
+  let taskStatus = document.createTextNode(element.status);
+  taskTitleContainer.appendChild(taskTitle);
+  taskStatusContainer.appendChild(taskStatus);
+  taskCard.appendChild(taskTitleContainer);
+  taskCard.appendChild(taskStatusContainer);
   document.querySelector("#task-list").appendChild(taskCard);
 }
