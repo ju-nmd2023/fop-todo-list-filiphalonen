@@ -5,7 +5,7 @@ function submitTask() {
   // object with name and status
   const taskObject = {
     name: taskName,
-    status: "notDone",
+    status: "",
   };
   // function for adding in local storage
   addToLocalStorage(taskObject);
@@ -56,15 +56,18 @@ function displayTask(element, index) {
 
   // create text node for task title and task status
   let taskTitle = document.createTextNode(element.name);
-  let taskStatus = document.createTextNode(element.status);
+  let taskStatus = document.createTextNode("");
+
   // append our content to their containers
   taskTitleContainer.appendChild(taskTitle);
   taskStatusContainer.appendChild(taskStatus);
   taskTextContainer.appendChild(taskTitleContainer);
   taskTextContainer.appendChild(taskStatusContainer);
   taskCard.appendChild(taskTextContainer);
+
   // add buttons. separate function for clarity
   addTaskButtons(taskCard, index, element.status);
+
   // add card to our list
   document.querySelector("#task-list").appendChild(taskCard);
 }
@@ -76,19 +79,19 @@ function addTaskButtons(taskCard, index, status) {
   let doneButton = document.createElement("button");
   // if status is done, create and append not done button and vice-versa
   if (status == "done") {
-    let doneText = document.createTextNode("notDone");
+    let doneText = document.createTextNode("✔️");
     doneButton.appendChild(doneText);
     doneButton.setAttribute("onclick", "markAsNotDone(" + index + ")");
     buttonWrapper.appendChild(doneButton);
   } else {
-    let doneText = document.createTextNode("done");
+    let doneText = document.createTextNode("✓");
     doneButton.appendChild(doneText);
     doneButton.setAttribute("onclick", "markAsDone(" + index + ")");
     buttonWrapper.appendChild(doneButton);
   }
   // create and add our delete button
   let deleteButton = document.createElement("button");
-  let deleteText = document.createTextNode("delete");
+  let deleteText = document.createTextNode("Delete");
   deleteButton.appendChild(deleteText);
   deleteButton.setAttribute("onclick", "removeTask(" + index + ")");
   buttonWrapper.appendChild(deleteButton);
@@ -106,7 +109,7 @@ function markAsDone(index) {
 // function to change status to not done
 function markAsNotDone(index) {
   let list = JSON.parse(localStorage.getItem("taskList"));
-  list[index].status = "notDone";
+  list[index].status = "";
   localStorage.setItem("taskList", JSON.stringify(list));
   getFromLocalStorage();
 }
