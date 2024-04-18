@@ -45,18 +45,24 @@ getFromLocalStorage();
 function displayTask(element, index) {
   // create our task card, title container and status container
   let taskCard = document.createElement("div");
-  let taskTitleContainer = document.createElement("div");
-  let taskStatusContainer = document.createElement("div");
+  let taskTextContainer = document.createElement("div");
+  let taskTitleContainer = document.createElement("p");
+  let taskStatusContainer = document.createElement("p");
   // add our css class to our card
   taskCard.classList.add("taskCard");
+  taskTitleContainer.classList.add("taskTitle");
+  taskTextContainer.classList.add("taskTextContainer");
+  taskStatusContainer.classList.add("taskStatus");
+
   // create text node for task title and task status
   let taskTitle = document.createTextNode(element.name);
   let taskStatus = document.createTextNode(element.status);
   // append our content to their containers
   taskTitleContainer.appendChild(taskTitle);
   taskStatusContainer.appendChild(taskStatus);
-  taskCard.appendChild(taskTitleContainer);
-  taskCard.appendChild(taskStatusContainer);
+  taskTextContainer.appendChild(taskTitleContainer);
+  taskTextContainer.appendChild(taskStatusContainer);
+  taskCard.appendChild(taskTextContainer);
   // add buttons. separate function for clarity
   addTaskButtons(taskCard, index, element.status);
   // add card to our list
@@ -65,25 +71,28 @@ function displayTask(element, index) {
 
 // function for adding buttons, uses the card element, its index and status
 function addTaskButtons(taskCard, index, status) {
+  let buttonWrapper = document.createElement("div");
+  buttonWrapper.classList.add("buttonWrapper");
   let doneButton = document.createElement("button");
   // if status is done, create and append not done button and vice-versa
   if (status == "done") {
     let doneText = document.createTextNode("notDone");
     doneButton.appendChild(doneText);
     doneButton.setAttribute("onclick", "markAsNotDone(" + index + ")");
-    taskCard.appendChild(doneButton);
+    buttonWrapper.appendChild(doneButton);
   } else {
     let doneText = document.createTextNode("done");
     doneButton.appendChild(doneText);
     doneButton.setAttribute("onclick", "markAsDone(" + index + ")");
-    taskCard.appendChild(doneButton);
+    buttonWrapper.appendChild(doneButton);
   }
   // create and add our delete button
   let deleteButton = document.createElement("button");
   let deleteText = document.createTextNode("delete");
   deleteButton.appendChild(deleteText);
   deleteButton.setAttribute("onclick", "removeTask(" + index + ")");
-  taskCard.appendChild(deleteButton);
+  buttonWrapper.appendChild(deleteButton);
+  taskCard.appendChild(buttonWrapper);
 }
 
 // function to change status to done
